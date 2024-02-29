@@ -2,16 +2,16 @@ from flask import Flask, redirect, request
 
 app = Flask(__name__)
 
-# Define commands with format [prefix, URL/search_URL, IS_Searchable]
+# Define commands with format [prefix, URL/search_URL, IS_Searchable, search_URL]
 COMMANDS = [
-    ("fb", "https://facebook.com", False),
-    ("m", "messenger://", False),
-    ("mw", "https://www.messenger.com/", False),
-    ("wa", "whatsapp://", False),
-    ("waw", "https://web.whatsapp.com/", False),
-    ("gm", "https://mail.google.com/mail/u/0", False),
+    ("fb", "https://facebook.com", False, None),
+    ("m", "messenger://", False, None),
+    ("mw", "https://www.messenger.com/", False, None),
+    ("wa", "whatsapp://", False, None),
+    ("waw", "https://web.whatsapp.com/", False, None),
+    ("gm", "https://mail.google.com/mail/u/0", False, None),
     # Add more commands here
-    ("wiki", "https://wiki.spicerhome.net/index.php?search=", True),
+    ("wiki", "https://wiki.spicerhome.net/index.php", True, "https://wiki.spicerhome.net/index.php?search="),
     # Add more search-related commands here
 ]
 
@@ -29,13 +29,15 @@ def index():
 
 @app.route('/search=<command>')
 def redirect_command(command):
-    for cmd, stored_url, searchable in COMMANDS:
+    for cmd, stored_url, searchable, search_url in COMMANDS:
         if command.lower().startswith(cmd):  # Check if the beginning of the requested command matches the command prefix
             if searchable:
                 # Extract search query from the request path
                 search_query = command[len(cmd):].strip()  # Extract search query after the command prefix
+                if search_query == "":
+                    return redirect(stored_url)
                 encoded_query = url_encode(search_query)
-                return redirect(stored_url + encoded_query)
+                return redirect(search_url + encoded_query)
             else:
                 return redirect(stored_url)
 
