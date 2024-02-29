@@ -30,12 +30,10 @@ def redirect_command(command):
     if command.lower() in COMMANDS:
         return redirect(COMMANDS[command.lower()])
     else:
-        for subdomain, search_domain in SEARCH_DOMAINS.items():
-            if command.startswith(subdomain + " "):
-                search_query = request.full_path[len(subdomain) + 2:]  # remove subdomain and space from the command
-                encoded_query = urllib.parse.quote_plus(search_query)
-                return redirect(search_domain % encoded_query)
-        return redirect(DEFAULT_SEARCH_DOMAIN % command)
+        # Extract search query from the request path
+        search_query = request.full_path.split('=', 1)[-1].strip()  # Split at the first '=', take the second part, and remove leading/trailing whitespace
+        encoded_query = urllib.parse.quote_plus(search_query)
+        return redirect(DEFAULT_SEARCH_DOMAIN % encoded_query)
 
 if __name__ == '__main__':
     app.run(debug=True)
