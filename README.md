@@ -20,7 +20,7 @@ To install and run the Flask Custom Bookmark Search locally, follow these steps:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your_username/flask-custom-bookmark-search.git
+    git clone https://github.com/RecentRichRail/flask-custom-bookmark-search.git
     ```
 
 2. Navigate to the project directory:
