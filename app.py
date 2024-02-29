@@ -3,37 +3,45 @@ import urllib.parse
 
 app = Flask(__name__)
 
-COMMANDS = {
-    'fb': "https://facebook.com/",
-    'm': "messenger://",
-    'mw': "https://www.messenger.com/",
-    'wa': "whatsapp://",
-    'waw': "https://web.whatsapp.com/",
-    'gm': "https://mail.google.com/mail/u/0",
-    # Include other commands here
-}
+# Define commands with format [prefix, URL/search_URL, IS_Searchable]
+COMMANDS = [
+    ("fb", "https://facebook.com", False),
+    ("m", "messenger://", False),
+    ("mw", "https://www.messenger.com/", False),
+    ("wa", "whatsapp://", False),
+    ("waw", "https://web.whatsapp.com/", False),
+    ("gm", "https://mail.google.com/mail/u/0", False),
+    # Add more commands here
+    ("wiki", "https://wiki.spicerhome.net/index.php?search=", True),
+    # Add more search-related commands here
+]
 
-DEFAULT_SEARCH_DOMAIN = "https://search.brave.com/search?q=%s&source=web"
+DEFAULT_SEARCH_DOMAIN = "https://search.brave.com/search?q=%s"
 
-# Dictionary to map search-related subdomains to their corresponding search domains
-SEARCH_DOMAINS = {
-    'wiki': "https://wiki.spicerhome.net/index.php?search=%s&title=Special%3ASearch&wprov=acrw1_-1",
-    # Add more search-related domains here
-}
 
 @app.route('/')
 def index():
     return 'Welcome to the Command Redirector!'
 
-@app.route('/<command>')
+
+@app.route('/search=<command>')
 def redirect_command(command):
-    if command.lower() in COMMANDS:
-        return redirect(COMMANDS[command.lower()])
-    else:
-        # Extract search query from the request path
-        search_query = request.full_path.split('=', 1)[-1].strip()  # Split at the first '=', take the second part, and remove leading/trailing whitespace
-        encoded_query = urllib.parse.quote_plus(search_query)
-        return redirect(DEFAULT_SEARCH_DOMAIN % encoded_query)
+    for cmd, url, searchable in COMMANDS:
+        if command.lower().startswith(cmd):  # Check if the beginning of the requested command matches the command prefix
+            if searchable:
+                # Extract search query from the request path
+                search_query = request.full_path.split('=', 1)[-1].strip()
+                encoded_query = urllib.parse.quote_plus(search_query)
+                return redirect(url % encoded_query)
+            else:
+                return redirect(url)
+
+    # If the command does not match any predefined commands or search-related subdomains,
+    # treat it as a web search with Brave
+    search_query = request.full_path.split('=', 1)[-1].strip()
+    encoded_query = urllib.parse.quote_plus(search_query)
+    return redirect(DEFAULT_SEARCH_DOMAIN % encoded_query)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
