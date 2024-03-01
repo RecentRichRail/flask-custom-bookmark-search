@@ -1,0 +1,54 @@
+{
+  "commands": [
+    {
+      "category": "default_search",
+      "prefix": ["g", "b"],
+      "url": "https://search.brave.com/",
+      "search_url": "https://search.brave.com/search?q={}&source=web"
+    },
+    {
+      "category": "shortcut",
+      "prefix": "fb",
+      "url": "https://facebook.com"
+    },
+    {
+      "category": "shortcut",
+      "prefix": ["commands", "cmds", "cmd"],
+      "url": "https://search.spicerhome.net/"
+    },
+    {
+      "category": "shortcut",
+      "prefix": ["guest"],
+      "url": "https://wiki.spicerhome.net/index.php/Guest_WiFi"
+    },
+    {
+      "category": "shortcut",
+      "prefix": ["help"],
+      "url": "https://wiki.spicerhome.net/index.php/SpicerHome_Search"
+    },
+    {
+      "category": "search",
+      "prefix": "wiki",
+      "url": "https://wiki.spicerhome.net/index.php",
+      "search_url": "https://wiki.spicerhome.net/index.php?search={}"
+    },
+    {
+      "category": "search",
+      "prefix": ["yt", "youtube"],
+      "url": "https://www.youtube.com/",
+      "search_url": "https://www.youtube.com/results?search_query={}"
+    },
+    {
+      "category": "search",
+      "prefix": ["git", "gh"],
+      "url": "https://github.com/",
+      "search_url": "https://github.com/search?q={}&type=repositories"
+    },
+    {
+      "category": "search",
+      "prefix": ["mygit", "mygh"],
+      "url": "https://github.com/RecentRichRail?tab=repositories",
+      "search_url": "https://github.com/search?q=owner%3ARecentRichRail+{}&type=repositories"
+    }
+  ]
+}
