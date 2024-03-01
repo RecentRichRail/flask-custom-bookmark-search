@@ -75,7 +75,7 @@ Alternatively, you can use Docker to run the Flask Custom Bookmark Search:
 4. In the "Keyword" input box, enter a keyword shortcut (e.g., fb).
 5. In the "URL with %s in place of query" input box, enter the following URL: `http://localhost:5000`.
 6. Click "Add" to save the new search engine.
-7. Now, you can use the keyword shortcut followed by your search query in the address bar to execute a bookmark search (e.g., `fb OpenAI`).
+7. Now, you can use the keyword shortcut followed by your search query in the address bar to execute a bookmark search (e.g., `yt Cat Videos`).
 
 ### Mozilla Firefox
 
@@ -86,7 +86,7 @@ Alternatively, you can use Docker to run the Flask Custom Bookmark Search:
 5. In the "Keyword" input box, enter a keyword shortcut (e.g., fb).
 6. In the "URL with %s in place of query" input box, enter the following URL: `http://localhost:5000`.
 7. Click "Add" to save the new search engine.
-8. Now, you can use the keyword shortcut followed by your search query in the address bar to execute a bookmark search (e.g., `fb OpenAI`).
+8. Now, you can use the keyword shortcut followed by your search query in the address bar to execute a bookmark search (e.g., `yt Cat Videos`).
 
 ### Microsoft Edge
 
@@ -97,7 +97,7 @@ Alternatively, you can use Docker to run the Flask Custom Bookmark Search:
 5. In the "Keyword" input box, enter a keyword shortcut (e.g., fb).
 6. In the "URL with %s in place of query" input box, enter the following URL: `http://localhost:5000`.
 7. Click "Add" to save the new search engine.
-8. Now, you can use the keyword shortcut followed by your search query in the address bar to execute a bookmark search (e.g., `fb OpenAI`).
+8. Now, you can use the keyword shortcut followed by your search query in the address bar to execute a bookmark search (e.g., `yt Cat Videos`).
 
 ## Contributing
 
