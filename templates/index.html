@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Custom Bookmark Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Flask Custom Bookmark Search</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Prefix</th>
+                    <th>URL</th>
+                    <th>Search URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for command in commands %}
+                <tr>
+                    <td>{{ command.category }}</td>
+                    <td>
+                        {% if command.prefix | list %}
+                            {{ command.prefix | join(', ') }}
+                        {% else %}
+                            {{ command.prefix }}
+                        {% endif %}
+                    </td>
+                    <td>{{ command.url }}</td>
+                    <td>{{ command.search_url if command.search_url else '' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="github-link">
+        <p><a href="https://github.com/RecentRichRail/flask-custom-bookmark-search">GitHub Repository</a></p>
+    </div>
+</body>
+</html>
