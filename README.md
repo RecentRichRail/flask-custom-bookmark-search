@@ -1,61 +1,109 @@
 # Flask Custom Bookmark Search
 
-Flask Custom Bookmark Search is a simple Flask application that redirects users to predefined URLs or performs searches based on user input. This project demonstrates how to containerize a Flask application using Docker.
+## Overview
+
+Flask Custom Bookmark Search is a web application built with Flask that allows users to create custom bookmark searches with predefined commands. It provides a simple interface for managing bookmarks and executing searches directly from the browser's address bar.
 
 ## Features
 
-- Redirects users to predefined URLs for specific commands.
-- Performs searches on different search engines or services based on user input.
-
-## Prerequisites
-
-Before you begin, ensure you have met the following requirements:
-
-- Docker: [Install Docker](https://docs.docker.com/get-docker/) on your local machine.
+- Create custom bookmark searches with prefixes
+- Support for different categories of searches (e.g., regular search, shortcut)
+- Clean and modern user interface
+- Easy deployment with Docker
 
 ## Installation
 
-To install and run the Flask Custom Bookmark Search locally, follow these steps:
+To run the Flask Custom Bookmark Search locally, follow these steps:
 
 1. Clone the repository:
 
-    ```bash
-    git clone https://github.com/RecentRichRail/flask-custom-bookmark-search.git
-    ```
+   ```bash
+   git clone https://github.com/RecentRichRail/flask-custom-bookmark-search.git
+   ```
 
 2. Navigate to the project directory:
 
-    ```bash
-    cd flask-custom-bookmark-search
-    ```
+   ```bash
+   cd flask-custom-bookmark-search
+   ```
 
-3. Build the Docker image:
+3. Install dependencies:
 
-    ```bash
-    docker build -t flask-custom-bookmark-search .
-    ```
-
-4. Run the Docker container:
-
-    ```bash
-    docker run -p 5000:5000 flask-custom-bookmark-search
-    ```
-
-5. Access the application in your browser at `http://localhost:5000`.
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ## Usage
 
-- Visit the URL `http://localhost:5000` in your web browser.
-- Enter a command in the address bar to perform a redirection or search.
-  - For predefined commands (e.g., `fb`, `wiki`), you will be redirected to the corresponding URL.
-  - For search queries (e.g., `wiki How to use Docker`), you will be redirected to a search page.
+1. Start the Flask application:
 
-## Configuration
+   ```bash
+   python app.py
+   ```
 
-- Add or modify predefined commands and their corresponding URLs in `app.py`.
-- Customize search-related subdomains and their corresponding search domains in `app.py`.
-- Adjust the default search domain in `app.py`.
+2. Open a web browser and go to `http://localhost:5000` to access the application.
+
+3. You can view and manage your custom bookmark searches from the homepage.
+
+4. To execute a bookmark search, type the prefix followed by the search query in the browser's address bar.
+
+## Docker
+
+Alternatively, you can use Docker to run the Flask Custom Bookmark Search:
+
+1. Build the Docker image:
+
+   ```bash
+   docker build -t flask-custom-bookmark-search .
+   ```
+
+2. Run the Docker container:
+
+   ```bash
+   docker run -p 5000:5000 flask-custom-bookmark-search
+   ```
+
+3. Access the application at `http://localhost:5000` in your web browser.
+
+## Usage with Different Browsers
+
+### Google Chrome
+
+1. Open Google Chrome and navigate to `chrome://settings/searchEngines`.
+2. Scroll down to the "Other search engines" section.
+3. In the "Add a new search engine" input box, enter a name for your custom search engine (e.g., Flask Bookmark Search).
+4. In the "Keyword" input box, enter a keyword shortcut (e.g., fb).
+5. In the "URL with %s in place of query" input box, enter the following URL: `http://localhost:5000`.
+6. Click "Add" to save the new search engine.
+7. Now, you can use the keyword shortcut followed by your search query in the address bar to execute a bookmark search (e.g., `fb OpenAI`).
+
+### Mozilla Firefox
+
+1. Open Mozilla Firefox and navigate to `about:preferences#search`.
+2. Scroll down to the "One-Click Search Engines" section.
+3. Click on "Add more search engines" at the bottom.
+4. In the search box, enter a name for your custom search engine (e.g., Flask Bookmark Search).
+5. In the "Keyword" input box, enter a keyword shortcut (e.g., fb).
+6. In the "URL with %s in place of query" input box, enter the following URL: `http://localhost:5000`.
+7. Click "Add" to save the new search engine.
+8. Now, you can use the keyword shortcut followed by your search query in the address bar to execute a bookmark search (e.g., `fb OpenAI`).
+
+### Microsoft Edge
+
+1. Open Microsoft Edge and navigate to `edge://settings/searchEngines`.
+2. Scroll down to the "Other search engines" section.
+3. Click on "Add" next to "Add search engine".
+4. In the "Name" input box, enter a name for your custom search engine (e.g., Flask Bookmark Search).
+5. In the "Keyword" input box, enter a keyword shortcut (e.g., fb).
+6. In the "URL with %s in place of query" input box, enter the following URL: `http://localhost:5000`.
+7. Click "Add" to save the new search engine.
+8. Now, you can use the keyword shortcut followed by your search query in the address bar to execute a bookmark search (e.g., `fb OpenAI`).
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue for feature requests, bug fixes, or improvements.
+Contributions are welcome! If you'd like to contribute to this project, please follow these guidelines:
+
+- Fork the repository and create your branch from `main`.
+- Make your changes and ensure the code style follows PEP 8 guidelines.
+- Write tests for any new features or changes you make.
+- Submit a pull request with a detailed description of your changes.
