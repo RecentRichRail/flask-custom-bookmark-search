@@ -1,4 +1,4 @@
-from flask import Flask, redirect
+from flask import Flask, redirect, render_template
 import urllib.parse
 import json
 
@@ -11,54 +11,8 @@ with open('src/commands.json', 'r') as file:
 
 @app.route('/')
 def index():
-    # HTML template for displaying command information
-    table_html = """
-    <html>
-    <head>
-        <style>
-            table {
-                border-collapse: collapse;
-                width: 80%;
-                margin: 20px auto;
-            }
-            th, td {
-                padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;
-            }
-            th {
-                background-color: #f2f2f2;
-            }
-        </style>
-    </head>
-    <body>
-        <h1 style="text-align: center;">Flask Custom Bookmark Search</h1>
-        <p style="text-align: center;"><a href="https://github.com/RecentRichRail/flask-custom-bookmark-search">GitHub Repository</a></p>
-        <table>
-            <tr>
-                <th>Category</th>
-                <th>Prefix</th>
-                <th>URL</th>
-                <th>Search URL</th>
-            </tr>
-    """
-    # Iterate through each command and populate the HTML table
-    for command in commands:
-        # Check if the prefix is a list or a single value
-        if isinstance(command['prefix'], list):
-            # Join the list of prefixes into a string
-            prefix_display = ', '.join(command['prefix'])
-        else:
-            prefix_display = command['prefix']
-        # Display search URL if available, otherwise an empty string
-        search_url_display = command.get('search_url', '')
-        table_html += f"<tr><td>{command['category']}</td><td>{prefix_display}</td><td>{command['url']}</td><td>{search_url_display}</td></tr>"
-    table_html += """
-        </table>
-    </body>
-    </html>
-    """
-    return table_html
+    # Render the HTML template and pass the commands data
+    return render_template('index.html', commands=commands)
 
 @app.route('/search=<command>')
 def redirect_command(command):
