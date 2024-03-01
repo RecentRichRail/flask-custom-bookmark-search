@@ -8,7 +8,7 @@
     },
     {
       "category": "shortcut",
-      "prefix": "fb",
+      "prefix": ["fb"],
       "url": "https://facebook.com"
     },
     {
@@ -28,7 +28,7 @@
     },
     {
       "category": "search",
-      "prefix": "wiki",
+      "prefix": ["wiki"],
       "url": "https://wiki.spicerhome.net/index.php",
       "search_url": "https://wiki.spicerhome.net/index.php?search={}"
     },
