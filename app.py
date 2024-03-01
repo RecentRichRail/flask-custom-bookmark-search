@@ -44,9 +44,15 @@ def index():
     """
     # Iterate through each command and populate the HTML table
     for command in commands:
+        # Check if the prefix is a list or a single value
+        if isinstance(command['prefix'], list):
+            # Join the list of prefixes into a string
+            prefix_display = ', '.join(command['prefix'])
+        else:
+            prefix_display = command['prefix']
         # Display search URL if available, otherwise an empty string
         search_url_display = command.get('search_url', '')
-        table_html += f"<tr><td>{command['category']}</td><td>{command['prefix']}</td><td>{command['url']}</td><td>{search_url_display}</td></tr>"
+        table_html += f"<tr><td>{command['category']}</td><td>{prefix_display}</td><td>{command['url']}</td><td>{search_url_display}</td></tr>"
     table_html += """
         </table>
     </body>
