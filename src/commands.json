@@ -28,7 +28,7 @@
     },
     {
       "category": "search",
-      "prefix": ["wiki"],
+      "prefix": ["wiki", "w"],
       "url": "https://wiki.spicerhome.net/index.php",
       "search_url": "https://wiki.spicerhome.net/index.php?search={}"
     },
