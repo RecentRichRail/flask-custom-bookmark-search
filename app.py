@@ -31,20 +31,34 @@ def redirect_command(command):
         # Iterate through prefixes to find a match
         for prefix in prefixes:
             # Check if the command starts with the prefix
-            if command.lower().startswith(prefix):
+            if command.lower().startswith(prefix + " "):
                 # Extract search query after the command prefix
-                search_query = command[len(prefix):].strip()
+                search_query = command[len(prefix + " "):].strip()
                 # Redirect based on command category and search query
-                if search_query == "" or cmd['category'] == "shortcut":
+                if search_query == "":
                     return redirect(cmd['url'])
                 else:
-                    if cmd['category'] == "search" or cmd['category'] == "default_search":
+                    if cmd['category'] == "search":
                         encoded_query = urllib.parse.quote_plus(search_query)
                         return redirect(cmd['search_url'].format(encoded_query))
+                    elif cmd['category'] == "default_search":
+                        encoded_query = urllib.parse.quote_plus(command)
+                        return redirect(cmd['search_url'].format(encoded_query))
                     else:
+                        continue
                         # Log error if the category for the URL is not set to 'search'
-                        print(f"Failed because category for URL '{cmd['url']}' is not set to 'search' or 'default_search'")
-                        break
+                        #print(f"Failed because category for URL '{cmd['url']}' is not set to 'search' or 'default_search'")
+                        #break
+            elif command.lower().startswith(prefix):
+                # Extract search query after the command prefix
+                search_query = command[len(prefix):].strip()
+                if search_query == "":
+                    return redirect(cmd['url'])
+                else:
+                    continue
+                    # Log error 'something went wrong'
+                    #print(f"Failed because 'something went wrong' - {command} - Found prefix {prefix}")
+                    #break
         else:
             continue
         break
