@@ -19,6 +19,16 @@ class AppTestCase(unittest.TestCase):
         response = self.app.get('/search=guest')
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.headers['Location'], 'https://wiki.spicerhome.net/index.php/Guest_WiFi')
+
+    def test_redirect_command_mygit(self):
+        response = self.app.get('/search=mygit')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.headers['Location'], 'https://github.com/RecentRichRail?tab=repositories')
+
+    def test_redirect_command_mygit_search(self):
+        response = self.app.get('/search=mygit search')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.headers['Location'], 'https://github.com/search?q=owner%3ARecentRichRail+search&type=repositories')
     
     def test_redirect_test_search(self):
         response = self.app.get('/search=google search')
