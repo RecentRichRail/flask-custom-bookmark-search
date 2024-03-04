@@ -29,6 +29,18 @@ class Request:
         self.category = ""
         self.encoded_query = ""
         self.is_search = False
+        self.search_url = ""
+
+# Read commands from JSON file 
+try:
+    with open('src/settings.json', 'r') as file:
+        settings_data = json.load(file)
+except FileNotFoundError:
+    logging.error("Could not find commands.json file.")
+    settings_data = {'settings': []}
+
+settings = settings_data['settings']
+allow_logging = settings[0]['allow_logging']
 
 # Read commands from JSON file 
 try:
@@ -87,15 +99,24 @@ def redirect_command(command):
                     request.is_search = True
                     request.url = prefixes.url
                     request.search_url = prefixes.search_url
+            break
+
     # If no prefix then use default_search
     else:
-        # request.prefix = False
         request.search_query = command
-        encoded_query = urllib.parse.quote_plus(command)
-        return redirect(default_search.search_url.format(encoded_query))
+        request.encoded_query = urllib.parse.quote_plus(request.search_query)
+        request.category = "search"
+        request.is_search = True
+        request.url = default_search.url
+        request.search_url = default_search.search_url
+
+    if allow_logging:
+        with open('requests.csv', 'a') as file:
+                file.write(f"{request.id},{request.original_request},{request.prefix},{request.search_query},{request.category},{request.url},{request.search_url}\n")
 
     if request.is_search:
         return redirect(request.search_url.format(request.encoded_query))
+
     else:
         return redirect(request.url.format(request.encoded_query))
 
