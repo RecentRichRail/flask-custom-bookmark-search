@@ -41,7 +41,7 @@ To run the Flask Custom Bookmark Search locally, follow these steps:
    python app.py
    ```
 
-2. Open a web browser and go to `http://localhost:5000` to access the application.
+2. Open a web browser and go to `http://localhost:80` to access the application.
 
 3. You can view and manage your custom bookmark searches from the homepage.
 
@@ -60,10 +60,10 @@ Alternatively, you can use Docker to run the Flask Custom Bookmark Search:
 2. Run the Docker container:
 
    ```bash
-   docker run -p 5000:5000 flask-custom-bookmark-search
+   docker run -p 80:80 flask-custom-bookmark-search
    ```
 
-3. Access the application at `http://localhost:5000` in your web browser.
+3. Access the application at `http://localhost:80` in your web browser.
 
 ## Usage with Different Browsers
 
@@ -73,7 +73,7 @@ Alternatively, you can use Docker to run the Flask Custom Bookmark Search:
 2. Scroll down to the "Other search engines" section.
 3. In the "Add a new search engine" input box, enter a name for your custom search engine (e.g., Flask Bookmark Search).
 4. In the "Keyword" input box, enter a keyword shortcut (e.g., fb).
-5. In the "URL with %s in place of query" input box, enter the following URL: `http://localhost:5000`.
+5. In the "URL with %s in place of query" input box, enter the following URL: `http://localhost:80`.
 6. Click "Add" to save the new search engine.
 7. Now, you can use the keyword shortcut followed by your search query in the address bar to execute a bookmark search (e.g., `yt Cat Videos`).
 
@@ -84,7 +84,7 @@ Alternatively, you can use Docker to run the Flask Custom Bookmark Search:
 3. Click on "Add more search engines" at the bottom.
 4. In the search box, enter a name for your custom search engine (e.g., Flask Bookmark Search).
 5. In the "Keyword" input box, enter a keyword shortcut (e.g., fb).
-6. In the "URL with %s in place of query" input box, enter the following URL: `http://localhost:5000`.
+6. In the "URL with %s in place of query" input box, enter the following URL: `http://localhost:80`.
 7. Click "Add" to save the new search engine.
 8. Now, you can use the keyword shortcut followed by your search query in the address bar to execute a bookmark search (e.g., `yt Cat Videos`).
 
@@ -95,7 +95,7 @@ Alternatively, you can use Docker to run the Flask Custom Bookmark Search:
 3. Click on "Add" next to "Add search engine".
 4. In the "Name" input box, enter a name for your custom search engine (e.g., Flask Bookmark Search).
 5. In the "Keyword" input box, enter a keyword shortcut (e.g., fb).
-6. In the "URL with %s in place of query" input box, enter the following URL: `http://localhost:5000`.
+6. In the "URL with %s in place of query" input box, enter the following URL: `http://localhost:80`.
 7. Click "Add" to save the new search engine.
 8. Now, you can use the keyword shortcut followed by your search query in the address bar to execute a bookmark search (e.g., `yt Cat Videos`).
 
