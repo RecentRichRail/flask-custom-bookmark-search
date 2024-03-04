@@ -34,6 +34,12 @@ class AppTestCase(unittest.TestCase):
         response = self.app.get('/search=google search')
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.headers['Location'], 'https://search.brave.com/search?q=google+search&source=web')
+        
+    def test_redirect_yt_test(self):
+        response = self.app.get('/search=yt test')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.headers['Location'], 'https://m.youtube.com/results?search_query=test')
+
 
 if __name__ == '__main__':
     unittest.main()
