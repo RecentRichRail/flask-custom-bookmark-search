@@ -104,6 +104,5 @@ Alternatively, you can use Docker to run the Flask Custom Bookmark Search:
 Contributions are welcome! If you'd like to contribute to this project, please follow these guidelines:
 
 - Fork the repository and create your branch from `main`.
-- Make your changes and ensure the code style follows PEP 8 guidelines.
 - Write tests for any new features or changes you make.
 - Submit a pull request with a detailed description of your changes.
