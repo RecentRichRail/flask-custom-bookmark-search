@@ -1,0 +1,19 @@
+{
+    "categories": [
+      {
+        "category": "default_search",
+        "can_search": true,
+        "max_number_of_items": 1
+      },
+      {
+        "category": "shortcut",
+        "can_search": false,
+        "max_number_of_items": 0
+      },
+      {
+        "category": "search",
+        "can_search": true,
+        "max_number_of_items": 0
+      }
+    ]
+  }
