@@ -1,8 +1,12 @@
 import logging
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, request, jsonify
 import urllib.parse
 import json
 import uuid
+import jwt
+import requests
+
+from pprint import pprint
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
@@ -42,6 +46,11 @@ except FileNotFoundError:
 
 settings = settings_data['settings']
 allow_logging = settings[0]['allow_logging']
+require_hanko_login = settings[0]['require_hanko_login']
+hanko_server_address = settings[0]['hanko_server_address']
+default_search_server_address = settings[0]['default_search_server_address']
+API_URL = settings[0]['API_URL'] #change this to your url from cloud.hanko.io
+AUDIENCE = settings[0]['AUDIENCE'] #change this to the domain you're hosting on, and make sure it matches the URL on cloud.hanko.io
 
 # Read commands from JSON file 
 try:
@@ -67,21 +76,72 @@ for cmd in commands:
             default_search = Prefixes(cmd['prefix'], cmd['category'], cmd['url'], cmd['search_url'])
         else:
             print(f"Unable to set default_search to {cmd['url']} because it is already set to {default_search.url}")
+if require_hanko_login:
+    # setup hanko login check
+    # Retrieve the JWKS from the Hanko API
+    jwks_url = f"{API_URL}/.well-known/jwks.json"
+    jwks_response = requests.get(jwks_url)
+    jwks_data = jwks_response.json()
+    public_keys = {}
+    for jwk in jwks_data["keys"]:
+        kid = jwk["kid"]
+        public_keys[kid] = jwt.algorithms.RSAAlgorithm.from_jwk(jwk)
+
+def check_for_login():
+    # Retrieve the JWT from the cookie
+    logging.info(f"Checking for jwt cookie...")
+    jwt_cookie = request.cookies.get("hanko")
+    # print(jwt_cookie)
+    if not jwt_cookie: #check that the cookie exists
+        logging.info(f"No jwt cookie found. Redirecting to /login...")
+        # return redirect("/login")
+        # return render_template('login.html', API_URL=API_URL, redirect=command)
+        return False
+    try:
+        logging.info(f"jwt cookie found. Verifying...")
+        kid = jwt.get_unverified_header(jwt_cookie)["kid"]
+        payload = jwt.decode(
+            str(jwt_cookie), 
+            public_keys[kid],
+            algorithms=["RS256"],
+            audience=AUDIENCE,
+        )
+        pprint(payload)
+    except Exception as e:
+        # The JWT is invalid
+        logging.info(f"JWT is invalid. Redirecting to /login...")
+        print(e)
+        # return jsonify({"message": "unauthorised"})
+        # return redirect("/login")
+        return False
+    # return jsonify({"message": "authorised"})
+    logging.info(f"JWT is valid.")
+    return True
 
 # Default page, this page shows the list of commands
 @app.route('/')
 def index():
+
+    if require_hanko_login:
+        request.is_authenticated = check_for_login()
+        if not request.is_authenticated:
+            return redirect(f"{hanko_server_address}/login?redirect={default_search_server_address}/")
+
     # Render the HTML template and pass the commands data
     return render_template('index.html', commands=commands)
 
 # Redirect to the appropriate URL based on the command
 @app.route('/search=<command>')
 def redirect_command(command):
+    request = Request(command)
+
+    if require_hanko_login:
+        request.is_authenticated = check_for_login()
+        if not request.is_authenticated:
+            return redirect(f"{hanko_server_address}/login?redirect={default_search_server_address}/search={command}")
 
     if not command:
         return redirect('/')
-    
-    request = Request(command)
 
     # Check if first word in command is in prefixes
     request.prefix = command.split(' ')[0].lower()
@@ -140,3 +200,4 @@ def redirect_command(command):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='80', debug=True)
+
