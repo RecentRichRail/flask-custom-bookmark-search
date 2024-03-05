@@ -38,7 +38,7 @@ class AppTestCase(unittest.TestCase):
     def test_redirect_yt_test(self):
         response = self.app.get('/search=yt test')
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.headers['Location'], 'https://m.youtube.com/results?search_query=test')
+        self.assertEqual(response.headers['Location'], 'https://www.youtube.com/results?search_query=test')
 
 
 if __name__ == '__main__':

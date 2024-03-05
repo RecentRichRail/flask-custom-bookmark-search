@@ -29,6 +29,7 @@ class Request:
         self.category = ""
         self.encoded_query = ""
         self.is_search = False
+        self.url = ""
         self.search_url = ""
 
 # Read commands from JSON file 
@@ -83,42 +84,59 @@ def redirect_command(command):
     request = Request(command)
 
     # Check if first word in command is in prefixes
-    first_word = command.split(' ')[0].lower()
-    requested_command_without_first_word = command.replace(first_word, '', 1).strip()
-    if first_word in only_prefixes:
-        request.prefix = first_word
+    request.prefix = command.split(' ')[0].lower()
+    logging.info(f"'{request.prefix}' has been set as the prefix")
+    request.search_query = command.replace(request.prefix, '', 1).strip()
+    logging.info(f"'{request.search_query}' has been set as the search_query")
+    if request.prefix in only_prefixes:
+        logging.info(f"'{request.prefix}' is in only_prefixes")
         # Check all_prefixes_classes for the prefix
         for prefixes in all_prefixes_classes:
             if request.prefix in prefixes.prefixes:
+                logging.info(f"'{request.prefix}' is in {prefixes.prefixes}")
                 request.category = prefixes.category
+                logging.info(f"'{request.category}' has been set as the category")
                 request.url = prefixes.url
-                if requested_command_without_first_word:
-                    request.search_query = requested_command_without_first_word
+                logging.info(f"'{request.url}' has been set as the url")
+                if request.search_query:
                     request.encoded_query = urllib.parse.quote_plus(request.search_query)
+                    logging.info(f"'{request.encoded_query}' has been set as the encoded_query")
                     request.category = "search"
+                    logging.info(f"'{request.category}' has been set as the category")
                     request.is_search = True
-                    request.url = prefixes.url
+                    logging.info(f"'{request.is_search}' has been set as the is_search")
                     request.search_url = prefixes.search_url
-            break
+                    logging.info(f"'{request.search_url}' has been set as the search_url")
+                break
 
     # If no prefix then use default_search
     else:
         request.search_query = command
+        logging.info(f"'{request.search_query}' has been set as the search_query")
         request.encoded_query = urllib.parse.quote_plus(request.search_query)
+        logging.info(f"'{request.encoded_query}' has been set as the encoded_query")
         request.category = "search"
+        logging.info(f"'{request.category}' has been set as the category")
         request.is_search = True
+        logging.info(f"'{request.is_search}' has been set as the is_search")
         request.url = default_search.url
+        logging.info(f"'{request.url}' has been set as the url")
         request.search_url = default_search.search_url
+        logging.info(f"'{request.search_url}' has been set as the search_url")
 
     if allow_logging:
         with open('requests.csv', 'a') as file:
                 file.write(f"{request.id},{request.original_request},{request.prefix},{request.search_query},{request.category},{request.url},{request.search_url}\n")
 
     if request.is_search:
+        logging.info(f"'request.is_search' is True")
+        logging.info(f"redirecting to {request.search_url.format(request.encoded_query)}")
         return redirect(request.search_url.format(request.encoded_query))
 
     else:
-        return redirect(request.url.format(request.encoded_query))
+        logging.info(f"'request.is_search' is False")
+        logging.info(f"redirecting to {request.url}")
+        return redirect(request.url)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='80', debug=True)
