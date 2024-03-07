@@ -2,10 +2,8 @@
     "settings": [
       {
         "allow_logging": true,
-        "require_hanko_login": false,
+        "require_hanko_login": true,
         "hanko_server_address": "http://localhost:8080",
-        "API_URL": " ",
-        "AUDIENCE": "localhost",
         "default_search_server_address": "http://localhost:80"
       }
     ]
