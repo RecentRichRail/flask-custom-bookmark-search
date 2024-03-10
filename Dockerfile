@@ -1,5 +1,5 @@
 # Use the official Python image as a base image
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 # Set the working directory in the container
 WORKDIR /app
@@ -15,6 +15,11 @@ EXPOSE 80
 
 # Define environment variable
 ENV FLASK_APP=app.py
+# For Dev Environment
+# ENV allow_logging=True
+# ENV require_hanko_login=True
+# ENV hanko_server_address=http://localhost:8080
+# ENV default_search_server_address=http://localhost:80
 
 # Run flask when the container launches
 #CMD ["flask", "run", "--host=0.0.0.0"]
